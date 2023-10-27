@@ -1,5 +1,6 @@
 import streamlit as st
 from auth import *
+from blog import *
 from google.oauth2 import id_token
 from google.auth.transport import requests
 from user_handaling import *
@@ -72,7 +73,7 @@ def handle_userinput(user_question):
 
 def main():
     load_dotenv()
-    st.set_page_config(page_title="chat with pdf", page_icon=":books:")
+    st.set_page_config(page_title="chat with pdf", page_icon=":books:", layout="wide",)
     st.write(css, unsafe_allow_html=True)
 
     if "conversation" not in st.session_state:
@@ -139,7 +140,9 @@ def main():
                 signup(name, nwe_password, email)
 
     if selected == "Learn more":
-        st.write("this is learn more page ")
+                greating()
+                scope()
+                works()
 
     if selected == "Contact":
         st.write("this is contact form")

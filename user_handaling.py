@@ -24,7 +24,7 @@ def login(email, password):
 
     if user_data and pbkdf2_sha256.verify(password, user_data["password"]):
         uname = user_data["username"]
-        cookie_manager.set("username", "uname")
+        cookie_manager.set("username", uname)
         st.success("Login successful! Welcome ")
         st.write("Welcome ", uname)
     else:
