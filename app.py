@@ -1,6 +1,7 @@
 import streamlit as st
 from auth import *
 from blog import *
+from contact import *
 from google.oauth2 import id_token
 from google.auth.transport import requests
 from user_handaling import *
@@ -62,7 +63,7 @@ def handle_userinput(user_question):
     response = st.session_state.conversation({'question': user_question})
     st.session_state.chat_history = response['chat_history']
 
-    for i, message in enumerate(st.session_state.chat_history):
+    for i, message in reversed(list(enumerate(st.session_state.chat_history))):
         if i % 2 == 0:
             st.write(user_template.replace(
                 "{{MSG}}", message.content), unsafe_allow_html=True)
@@ -73,7 +74,7 @@ def handle_userinput(user_question):
 
 def main():
     load_dotenv()
-    st.set_page_config(page_title="chat with pdf", page_icon=":books:", layout="wide",)
+    st.set_page_config(page_title="chat with pdf", page_icon=":books:", layout="wide", )
     st.write(css, unsafe_allow_html=True)
 
     if "conversation" not in st.session_state:
@@ -93,9 +94,9 @@ def main():
 
         selected = option_menu(
             menu_title="Inquire.AI",
-            options=["Chat", "login/signup", "Learn more", "Contact", "History"],
+            options=["Chat", "login/signup", "Learn more", "Contact"],
             icons=["chat-left-fill", "person-lines-fill",
-                   "arrow-up-right-square", "bi bi-telephone", "clock-history"],
+                   "arrow-up-right-square", "bi bi-telephone"],
             menu_icon="Home",
             default_index=0
         )
@@ -133,6 +134,7 @@ def main():
                 login(username, password)
             st.write("---")
         with st.container():
+            st.header("Sign up")
             name = st.text_input("chose your name")
             email = st.text_input("email")
             nwe_password = st.text_input("code", type="password")
@@ -140,12 +142,15 @@ def main():
                 signup(name, nwe_password, email)
 
     if selected == "Learn more":
-                greating()
-                scope()
-                works()
+        greating()
+        scope()
+        diagram()
+        works()
+        talk()
+        Bibliography()
 
     if selected == "Contact":
-        st.write("this is contact form")
+        contact()
 
     if selected == "History":
         st.subheader("Check  history")

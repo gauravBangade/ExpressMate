@@ -2,6 +2,14 @@ import json
 import streamlit as st
 import requests 
 from PIL import Image
+from streamlit_lottie import st_lottie
+
+def load_url(url):
+    r = requests.get(url)
+    if r.status_code != 200:
+       return None
+    else:
+        return r.json()
 
 def greating():
     with st.container():
@@ -21,14 +29,19 @@ def greating():
             st.write("---")
         
         with right:
-            st.text_area("lotte file ")
+            gaurav_url ="https://lottie.host/8e67d7e8-d8a9-450b-805f-b75f1bf60b23/0dCgmhG5us.json"
+            coder = load_url(gaurav_url)
+            st_lottie(coder, height=350, key="coder")
 
 def scope():
     with st.container():
          st.header("Scope")
          left, right = st.columns(2)
          with left:
-             st.write("laptop")
+              laptop_url = "https://lottie.host/a9925a70-697b-4065-8962-dfcbdcd853c5/PFAvyqffOl.json"
+              laptop = load_url(laptop_url)
+              st_lottie(laptop, height=400, key="laptop")
+
          with right:
             st.write("##")
             st.write(
@@ -49,11 +62,11 @@ def scope():
             )
 
 
-def works():
+def diagram():
     with st.container():
             st.write("---")
             st.header("How it works")
-            st.write("This is how the core funcanality of the project works ")
+            st.write("This is a diagram showing how the project works ")
             image, text = st.columns((2, 1))
             with image:
                 Diagram = Image.open("images\Diagrams.png")
@@ -64,14 +77,51 @@ def works():
                 st.write("##")
                 st.write(
                 '''
-                 Technology's used 
-                 - Python
-                 - streamlit 
-                 - mongoDB
-                 - langchain
-                 - FAISS
-                 - hosting git etc 
+                       Technology's used 
+                         - Python
+                         - streamlit 
+                         - mongoDB
+                         - langchain
+                         - FAISS
+                         - hosting git etc 
                        ''')
-    st.write("ivnof")
+                
+
+def works():
+    st.header("Processing")
+    st.write('''
+        As you login and upload your PDFs and click on the process button:
+        - All the text in the PDF is extracted.
+        - All the text is divided into chunks.
+        - All the chunks are turned into embeddings and stored in a vector database (e.g., FAISS).
+        - All the embeddings are stored in a vector database (e.g., FAISS).
+        ''')
+
+def talk():
+    with st.container():
+        st.header("Now you are ready to chat")
+        left, right = st.columns(2)
+        with left:
+            st.write('''
+                    When you type in your question:
+                    - Your question is embedded.
+                    - We perform a similarity search in our vector DB.
+                    - We rank the results we get.
+                    - We send the best-ranked result and the question as the context to our LLM.
+                    - We get the answer from the LLM.
+''')
+        with right:
+            serch_url ="https://lottie.host/40e5e317-5032-455c-b024-7bd34465c1af/x5GpAiWxab.json"
+            serch = load_url(serch_url)
+            st_lottie(serch, height=300, key="serch")
+
+def Bibliography():
+    st.write("---")
+    st.header("Bibliography")
+    st.write("Webiste refrences")
+    st.markdown("[Streamlit Doc ](https://docs.streamlit.io/)")
+    st.markdown("[FAISS](https://ai.meta.com/tools/faiss/#:~:text=FAISS%20%28Facebook%20AI%20Similarity%20Search%2C%20more%20scalable%20similarity%20search%20functions.%29)")
+    st.markdown("[LangChain](https://docs.langchain.com/docs/)")
+
 
 
